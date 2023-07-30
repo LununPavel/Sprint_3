@@ -3,6 +3,7 @@ import pytest
 from faker import Faker
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from locators import Locators
 
 @pytest.fixture
 def generator_password():
@@ -19,14 +20,14 @@ def generator_email():
 
 @pytest.fixture
 def driver():
-    browser = webdriver.Chrome('C:\chromedriver\chromedriver.exe')
+    browser = webdriver.Chrome()
     browser.get('https://stellarburgers.nomoreparties.site/')
     yield browser
     browser.quit()
 
 @pytest.fixture
 def login(driver):
-    driver.find_element(By.XPATH, "//p[contains(text(),'Личный Кабинет')]").click()
-    driver.find_element(By.XPATH, "//fieldset[1]//input").send_keys('pavel@lunin.ru')
-    driver.find_element(By.XPATH, "//fieldset[2]//input").send_keys('111111')
-    driver.find_element(By.XPATH, "//button[contains(text(),'Войти')]").click()
+    driver.find_element(*Locators.PERS_ACC_BUTTON).click()
+    driver.find_element(*Locators.LOG_FIELD).send_keys('pavel@lunin.ru')
+    driver.find_element(*Locators.PASS_FIELD).send_keys('111111')
+    driver.find_element(*Locators.LOG_BUTTON).click()

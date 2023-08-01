@@ -1,17 +1,17 @@
 import time
-
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from locators import Locators
+from generator_data import GeneratorData
 
+
+email = GeneratorData().generator_email()
+password = GeneratorData().generator_password()
 
 class TestRegistrationInStellarBurgers():
 
-    def test_registration_valid_data_successful_registration(self, driver, generator_password, generator_email):
+    def test_registration_valid_data_successful_registration(self, driver):
 
-        email = generator_email
-        password = generator_password
 
         driver.find_element(*Locators.ENT_ACC_BUTTON).click()
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(Locators.TRANS_REG_BUTTON)).click()
@@ -35,9 +35,8 @@ class TestRegistrationInStellarBurgers():
             EC.text_to_be_present_in_element_attribute(Locators.PROF_EMAIL_FIELD, 'value', email))
 
 
-    def test_registration_invalid_password_unsuccessful_registration(self, driver, generator_email):
+    def test_registration_invalid_password_unsuccessful_registration(self, driver):
 
-        email = generator_email
 
         driver.find_element(*Locators.ENT_ACC_BUTTON).click()
         WebDriverWait(driver, 10).until(

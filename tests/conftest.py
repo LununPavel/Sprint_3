@@ -1,27 +1,14 @@
-import random
 import pytest
-from faker import Faker
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from locators import Locators
+from urls import Urls
 
-@pytest.fixture
-def generator_password():
-    password = random.randint(100000, 999999)
-
-    return password
-
-@pytest.fixture
-def generator_email():
-    faker = Faker()
-    email = faker.email()
-
-    return email
+url = Urls().urls()
 
 @pytest.fixture
 def driver():
     browser = webdriver.Chrome()
-    browser.get('https://stellarburgers.nomoreparties.site/')
+    browser.get(url)
     yield browser
     browser.quit()
 
